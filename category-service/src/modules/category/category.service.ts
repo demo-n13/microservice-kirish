@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectModel } from '@nestjs/sequelize';
+import { CreateCategoryDto, UpdateCategoryDto } from './dto';
 import { Category } from './models';
 
 @Injectable()
@@ -15,12 +14,15 @@ export class CategoryService {
     return await this.categoryModel.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: number) {
+    return await this.categoryModel.findByPk(id);
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: number, updateCategoryDto: UpdateCategoryDto) {
+    return await this.categoryModel.update(
+      { name: updateCategoryDto.name },
+      { where: { id } },
+    );
   }
 
   async remove(id: number) {

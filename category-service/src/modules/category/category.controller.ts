@@ -1,22 +1,18 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
-import { CategoryService } from './category.service';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
+import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { CategoryService } from './category.service';
+import {
+  CreateCategoryDto,
+  DeleteCategoryDto,
+  GetSingleCategoryDto,
+  UpdateCategoryDto,
+} from './dto';
 
 @Controller()
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @MessagePattern("createCategory")
+  @MessagePattern('createCategory')
   create(@Payload() createCategoryDto: CreateCategoryDto) {
     return this.categoryService.create(createCategoryDto);
   }
@@ -26,19 +22,18 @@ export class CategoryController {
     return await this.categoryService.findAll();
   }
 
-  findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(+id);
+  @MessagePattern('getSingleCategory')
+  findOne(@Payload() payload: GetSingleCategoryDto) {
+    return this.categoryService.findOne(payload.id);
   }
 
-  update(
-    @Param('id') id: string,
-    @Body() updateCategoryDto: UpdateCategoryDto,
-  ) {
-    return this.categoryService.update(+id, updateCategoryDto);
+  @MessagePattern('updateCategory')
+  update(@Payload() updateCategoryDto: UpdateCategoryDto) {
+    return this.categoryService.update(updateCategoryDto.id, updateCategoryDto);
   }
 
-  @MessagePattern("deleteCategory")
-  remove(@Payload() payload: {id: number}) {
+  @MessagePattern('deleteCategory')
+  remove(@Payload() payload: DeleteCategoryDto) {
     return this.categoryService.remove(payload.id);
   }
 }
