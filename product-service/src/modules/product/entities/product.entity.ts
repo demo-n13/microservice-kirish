@@ -20,7 +20,7 @@ export class Product {
   @Column({ type: 'int' })
   price: number;
 
-  @Column({ type: 'int', default: 3 })
+  @Column({ type: 'float', default: 3 })
   rating: number;
 
   @Column({ type: 'int' })
