@@ -1,5 +1,5 @@
 import {
-    ConnectedSocket,
+  ConnectedSocket,
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
@@ -18,11 +18,11 @@ export class ChatGateway {
 
   @SubscribeMessage('typing')
   handleTyping(@MessageBody() data: any, @ConnectedSocket() client: Socket) {
-    client.broadcast.emit('typing', `${data.user} is typing...`);
+    client.broadcast.emit('typing', {user: data.user});
   }
 
   @SubscribeMessage("joined")
   handleJoin(@MessageBody() data: any) {
-    this.server.emit('joined', `${data.user} joined the chat`);
+    this.server.emit('joined', { user: data.user});
   }
 }
