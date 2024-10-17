@@ -12,5 +12,6 @@ async function bootstrap() {
       }
     });
   await app.listen();
+  console.log(`Category service listening on port ${3001}`)
 }
 bootstrap();

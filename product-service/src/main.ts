@@ -14,5 +14,6 @@ async function bootstrap() {
     },
   );
   await app.listen();
+  console.log(`Product service listening on port ${3002}`);
 }
 bootstrap();
