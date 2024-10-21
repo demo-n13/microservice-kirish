@@ -1,6 +1,9 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateTranslateDto } from './create-translate.dto';
+import { IsObject, IsUUID } from 'class-validator';
 
-export class UpdateTranslateDto extends PartialType(CreateTranslateDto) {
-  id: number;
+export class UpdateTranslateDto {
+  @IsUUID(4)
+  id: string;
+
+  @IsObject()
+  definition: Record<string, string>;
 }

@@ -1,8 +1,11 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { TranslateService } from './translate.service';
-import { CreateTranslateDto } from './dto/create-translate.dto';
-import { UpdateTranslateDto } from './dto/update-translate.dto';
+import {
+  CreateTranslateDto,
+  GetSingleTranslateDto,
+  UpdateTranslateDto,
+} from './dto';
 
 @Controller()
 export class TranslateController {
@@ -19,17 +22,17 @@ export class TranslateController {
   }
 
   @MessagePattern('findOneTranslate')
-  findOne(@Payload() id: number) {
-    return this.translateService.findOne(id);
+  findOne(@Payload() payload: GetSingleTranslateDto) {
+    return this.translateService.findOne(payload);
   }
 
   @MessagePattern('updateTranslate')
   update(@Payload() updateTranslateDto: UpdateTranslateDto) {
-    return this.translateService.update(updateTranslateDto.id, updateTranslateDto);
+    return this.translateService.update(updateTranslateDto);
   }
 
   @MessagePattern('removeTranslate')
-  remove(@Payload() id: number) {
+  remove(@Payload() id: string) {
     return this.translateService.remove(id);
   }
 }
