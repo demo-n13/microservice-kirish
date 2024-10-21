@@ -1,8 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { LanguageService } from './language.service';
-import { CreateLanguageDto } from './dto/create-language.dto';
-import { UpdateLanguageDto } from './dto/update-language.dto';
+import { CreateLanguageDto, UpdateLanguageDto } from './dto';
 
 @Controller()
 export class LanguageController {
@@ -19,7 +18,7 @@ export class LanguageController {
   }
 
   @MessagePattern('findOneLanguage')
-  findOne(@Payload() id: number) {
+  findOne(@Payload() id: string) {
     return this.languageService.findOne(id);
   }
 
@@ -29,7 +28,7 @@ export class LanguageController {
   }
 
   @MessagePattern('removeLanguage')
-  remove(@Payload() id: number) {
+  remove(@Payload() id: string) {
     return this.languageService.remove(id);
   }
 }

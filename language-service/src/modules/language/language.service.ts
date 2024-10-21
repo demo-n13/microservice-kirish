@@ -7,8 +7,14 @@ import { PrismaService } from '@prisma';
 export class LanguageService {
   constructor(private prisma: PrismaService) {}
 
-  create(createLanguageDto: CreateLanguageDto) {
-    return 'This action adds a new language';
+  async create(createLanguageDto: CreateLanguageDto) {
+    return await this.prisma.language.create({
+      data: {
+        code: createLanguageDto.code,
+        name: createLanguageDto.name,
+        image: createLanguageDto?.image,
+      },
+    });
   }
 
   async findAll() {
@@ -19,11 +25,18 @@ export class LanguageService {
     return await this.prisma.language.findFirst({ where: { id } });
   }
 
-  update(id: number, updateLanguageDto: UpdateLanguageDto) {
-    return `This action updates a #${id} language`;
+  async update(id: string, updateLanguageDto: UpdateLanguageDto) {
+    return await this.prisma.language.update({
+      where: { id },
+      data: {
+        code: updateLanguageDto?.code,
+        name: updateLanguageDto?.name,
+        image: updateLanguageDto?.image,
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} language`;
+  async remove(id: string) {
+    return await this.prisma.language.delete({ where: { id } });
   }
 }
