@@ -9,9 +9,16 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       clientID:
         '593390395099-us64sauh9b035otsn1aigtnim894isok.apps.googleusercontent.com',
       clientSecret: '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',
-      // callbackURL: "",
-      scopes: ['email', 'profile'],
+      callbackURL: 'http://localhost:3000/auth/google/callback',
+      scope: ['email', 'profile'],
     });
+  }
+
+  authorizationParams(options: any): object {
+    return {
+      prompt: 'consent',
+      access_type: 'offline',
+    };
   }
 
   async validate(
@@ -20,8 +27,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: any,
     cb: VerifyCallback,
   ) {
-    console.log(accessToken, refreshToken, profile)
+    console.log(accessToken, refreshToken, profile);
 
-    cb(null, profile)
+    return cb(null, profile);
   }
 }

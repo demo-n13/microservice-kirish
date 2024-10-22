@@ -1,7 +1,13 @@
 import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { CategoryModule, ChatModule, LocalizationModule, ProductModule } from '@modules';
+import {
+  AuthModule,
+  CategoryModule,
+  ChatModule,
+  LocalizationModule,
+  ProductModule,
+} from '@modules';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
@@ -11,6 +17,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       serveRoot: '/static',
     }),
     MongooseModule.forRoot('mongodb://localhost:27017/microservice'),
+    AuthModule,
     CategoryModule,
     ProductModule,
     ChatModule,
